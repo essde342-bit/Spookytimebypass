@@ -30,7 +30,8 @@ public abstract class PacketMixin {
         float pitch = SpookyBypass.serverPitch;
         if (yaw == 0 && pitch == 0) return;
 
-        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket.PositionAndLook(
+        // Yarn 1.16.5 names the packet containing both position and rotation "Both".
+        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket.Both(
             movePacket.getX(0), movePacket.getY(0), movePacket.getZ(0),
             yaw, pitch, movePacket.isOnGround()
         );
