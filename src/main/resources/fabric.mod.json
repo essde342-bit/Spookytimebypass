@@ -1,0 +1,16 @@
+{
+    "schemaVersion": 1,
+    "id": "spookybypass",
+    "version": "1.0.0",
+    "name": "SpookyBypass",
+    "description": "Aim assist bypass for SpookyTime",
+    "authors": ["Fox"],
+    "license": "MIT",
+    "environment": "client",
+    "entrypoints": {"main": ["com.fox.spookybypass.SpookyBypass"]},
+    "mixins": ["spookybypass.mixins.json"],
+    "depends": {
+        "fabricloader": ">=0.14.0",
+        "minecraft": "1.16.5"
+    }
+}
