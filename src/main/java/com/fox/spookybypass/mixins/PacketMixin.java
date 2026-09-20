@@ -23,8 +23,6 @@ public abstract class PacketMixin {
         }
 
         PlayerMoveC2SPacket movePacket = (PlayerMoveC2SPacket) packet;
-
-        // getYaw(fallback) returns fallback when the packet does not contain a look change.
         float fallback = 999999.0F;
         if (movePacket.getYaw(fallback) == fallback) return;
 
@@ -32,11 +30,9 @@ public abstract class PacketMixin {
         float pitch = SpookyBypass.serverPitch;
         if (yaw == 0 && pitch == 0) return;
 
-        // In the 1.16.5 mappings, PlayerMoveC2SPacket uses one constructor with
-        // flags instead of the newer nested Full packet class.
-        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket(
+        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket.PositionAndLook(
             movePacket.getX(0), movePacket.getY(0), movePacket.getZ(0),
-            yaw, pitch, movePacket.isOnGround(), false, true
+            yaw, pitch, movePacket.isOnGround()
         );
 
         REPLACING_PACKET.set(true);
