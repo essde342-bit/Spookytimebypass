@@ -1,0 +1,7 @@
+{
+    "required": true,
+    "package": "com.fox.spookybypass.mixins",
+    "compatibilityLevel": "JAVA_8",
+    "client": ["PacketMixin"],
+    "injectors": {"defaultRequire": 1}
+}
