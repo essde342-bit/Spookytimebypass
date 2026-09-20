@@ -18,13 +18,19 @@ public abstract class PacketMixin {
         if (!SpookyBypass.enabled) return;
         
         PlayerMoveC2SPacket movePacket = (PlayerMoveC2SPacket) packet;
-        if (!movePacket.changesLook()) return;
+        
+        // Хак: getYaw(fallback) вернёт fallback если changeLook == false
+        // Если вернулось другое значение - значит changeLook == true
+        float testValue = 999999.0F;
+        boolean hasLook = movePacket.getYaw(testValue) != testValue;
+        if (!hasLook) return;
         
         float yaw = SpookyBypass.serverYaw;
         float pitch = SpookyBypass.serverPitch;
         if (yaw == 0 && pitch == 0) return;
         
-        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket(
+        // В 1.16.5 используем внутренний класс Full
+        PlayerMoveC2SPacket modified = new PlayerMoveC2SPacket.Full(
             movePacket.getX(0), movePacket.getY(0), movePacket.getZ(0),
             yaw, pitch, movePacket.isOnGround()
         );
