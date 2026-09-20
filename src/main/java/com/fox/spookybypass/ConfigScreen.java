@@ -21,7 +21,6 @@ public class ConfigScreen extends Screen {
         int buttonHeight = 20;
         int spacing = 25;
         
-        // Toggle button
         this.addButton(new ButtonWidget(
             centerX - buttonWidth / 2, startY,
             buttonWidth, buttonHeight,
@@ -32,7 +31,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Smoothness -
         this.addButton(new ButtonWidget(
             centerX - buttonWidth - 5, startY + spacing,
             70, buttonHeight,
@@ -42,7 +40,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Smoothness +
         this.addButton(new ButtonWidget(
             centerX + 5, startY + spacing,
             70, buttonHeight,
@@ -52,7 +49,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Speed -
         this.addButton(new ButtonWidget(
             centerX - buttonWidth - 5, startY + spacing * 2,
             70, buttonHeight,
@@ -62,7 +58,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Speed +
         this.addButton(new ButtonWidget(
             centerX + 5, startY + spacing * 2,
             70, buttonHeight,
@@ -72,7 +67,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // FOV -
         this.addButton(new ButtonWidget(
             centerX - buttonWidth - 5, startY + spacing * 3,
             70, buttonHeight,
@@ -82,7 +76,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // FOV +
         this.addButton(new ButtonWidget(
             centerX + 5, startY + spacing * 3,
             70, buttonHeight,
@@ -92,7 +85,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Distance -
         this.addButton(new ButtonWidget(
             centerX - buttonWidth - 5, startY + spacing * 4,
             70, buttonHeight,
@@ -102,7 +94,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Distance +
         this.addButton(new ButtonWidget(
             centerX + 5, startY + spacing * 4,
             70, buttonHeight,
@@ -112,7 +103,6 @@ public class ConfigScreen extends Screen {
             }
         ));
         
-        // Close button
         this.addButton(new ButtonWidget(
             centerX - buttonWidth / 2, startY + spacing * 5 + 10,
             buttonWidth, buttonHeight,
@@ -152,7 +142,6 @@ public class ConfigScreen extends Screen {
         super.render(matrices, mouseX, mouseY, delta);
     }
     
-    @Override
     public boolean shouldPause() {
         return false;
     }
