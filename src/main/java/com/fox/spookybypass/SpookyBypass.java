@@ -15,6 +15,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
 import java.util.Random;
+import java.util.stream.StreamSupport;
 
 public class SpookyBypass implements ModInitializer {
     public static boolean enabled = false;
@@ -35,12 +36,19 @@ public class SpookyBypass implements ModInitializer {
             }
             if (!enabled || mc.player == null || mc.world == null) return;
 
-            Entity target = mc.world.getEntities().stream()
+            Entity target = StreamSupport.stream(mc.world.getEntities().spliterator(), false)
                 .filter(e -> isValidTarget(mc, e))
                 .min(Comparator.comparingDouble(e -> mc.player.squaredDistanceTo(e)))
                 .orElse(null);
 
             if (target == null) return;
+
+            Vec3d eyeCheck = mc.player.getCameraPosVec(1.0F);
+            float[] preRot = getRot(target, eyeCheck);
+            float requiredYawDelta = Math.abs(MathHelper.wrapDegrees(preRot[0] - mc.player.yaw));
+            float requiredPitchDelta = Math.abs(preRot[1] - mc.player.pitch);
+
+            if (requiredYawDelta > 35F || requiredPitchDelta > 25F) return;
             if (!mc.options.keyAttack.isPressed()) return;
 
             Vec3d eye = mc.player.getCameraPosVec(1.0F);
@@ -79,11 +87,13 @@ public class SpookyBypass implements ModInitializer {
 
     private static boolean isValidTarget(MinecraftClient mc, Entity e) {
         if (e == null || e == mc.player || !(e instanceof LivingEntity)) return false;
-        if (e.isDead() || ((LivingEntity)e).getHealth() <= 0) return false;
+        if (!e.isAlive() || ((LivingEntity)e).getHealth() <= 0) return false;
         if (mc.player.squaredDistanceTo(e) > 36.0D) return false;
         if (!mc.player.canSee(e)) return false;
         float[] rot = getRot(e, mc.player.getCameraPosVec(1.0F));
-        if (Math.abs(MathHelper.wrapDegrees(rot[0] - mc.player.yaw)) > 45F) return false;
+        float angleDiff = Math.abs(MathHelper.wrapDegrees(rot[0] - mc.player.yaw));
+        if (angleDiff > 30F) return false;
+        if (Math.abs(rot[1] - mc.player.pitch) > 25F) return false;
         return e instanceof PlayerEntity;
     }
 
